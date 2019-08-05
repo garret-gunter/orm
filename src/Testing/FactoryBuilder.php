@@ -279,7 +279,7 @@ class FactoryBuilder
     protected function applyStates(array $definition, array $attributes = [])
     {
         foreach ($this->activeStates as $state) {
-            if (! isset($this->states[$this->class][$state])) {
+            if (! isset($this->states[$state])) {
                 if ($this->stateHasAfterCallback($state)) {
                     continue;
                 }
@@ -305,7 +305,7 @@ class FactoryBuilder
      */
     protected function stateAttributes($state, array $attributes)
     {
-        $stateAttributes = $this->states[$this->class][$state];
+        $stateAttributes = $this->states[$state];
 
         if (! is_callable($stateAttributes)) {
             return $stateAttributes;
