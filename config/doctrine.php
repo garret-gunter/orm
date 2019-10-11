@@ -4,7 +4,7 @@ return [
 
     /*
     |--------------------------------------------------------------------------
-    | Entity Mangers
+    | Entity Managers
     |--------------------------------------------------------------------------
     |
     | Configure your Entity Managers here. You can set a different connection
@@ -12,7 +12,7 @@ return [
     | paths setting to the appropriate path and replace App namespace
     | by your own namespace.
     |
-    | Available meta drivers: fluent|annotations|yaml|xml|config|static_php|php
+    | Available meta drivers: fluent|annotations|yaml|simplified_yaml|xml|simplified_xml|config|static_php|php
     |
     | Available connections: mysql|oracle|pgsql|sqlite|sqlsrv
     | (Connections can be configured in the database config)
@@ -108,7 +108,6 @@ return [
     |--------------------------------------------------------------------------
     */
     'custom_types'               => [
-        'json' => LaravelDoctrine\ORM\Types\Json::class
     ],
     /*
     |--------------------------------------------------------------------------
