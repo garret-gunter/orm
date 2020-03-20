@@ -1,12 +1,13 @@
 <?php
 
-namespace LaravelDoctrine\ORM\Configuration\MetaData;
+namespace LaravelDoctrine\ORM\Configuration\Cache;
 
+use Doctrine\Common\Cache\PhpFileCache;
 use Illuminate\Contracts\Config\Repository;
-use Illuminate\Support\Arr;
-use LaravelDoctrine\ORM\Configuration\MetaData\Config\ConfigDriver;
+use LaravelDoctrine\ORM\Configuration\Driver;
+use function storage_path;
 
-class Config extends MetaData
+class PhpFileCacheProvider implements Driver
 {
     /**
      * @var Repository
@@ -24,12 +25,12 @@ class Config extends MetaData
     /**
      * @param array $settings
      *
-     * @return \Doctrine\Persistence\Mapping\Driver\MappingDriver
+     * @return PhpFileCache
      */
     public function resolve(array $settings = [])
     {
-        return new ConfigDriver(
-            $this->config->get(Arr::get($settings, 'mapping_file'), [])
+        return new PhpFileCache(
+            $this->config->get('cache.stores.file.path', storage_path('framework/cache'))
         );
     }
 }

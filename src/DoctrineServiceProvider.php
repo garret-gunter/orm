@@ -2,11 +2,11 @@
 
 namespace LaravelDoctrine\ORM;
 
-use Doctrine\Common\Persistence\ManagerRegistry;
 use Doctrine\Common\Proxy\Autoloader;
 use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\Mapping\ClassMetadataFactory;
+use Doctrine\Persistence\ManagerRegistry;
 use Faker\Factory as FakerFactory;
 use Faker\Generator as FakerGenerator;
 use Illuminate\Contracts\Container\Container;
@@ -161,6 +161,11 @@ class DoctrineServiceProvider extends ServiceProvider
 
         $this->app->alias('registry', ManagerRegistry::class);
         $this->app->alias('registry', IlluminateRegistry::class);
+
+        // This namespace has been deprecated in doctrine/persistence and we have
+        // stopped referring to it. Alias is necessary to let other use it until
+        // its removed.
+        $this->app->alias('registry', \Doctrine\Common\Persistence\ManagerRegistry::class);
     }
 
     /**
@@ -310,8 +315,8 @@ class DoctrineServiceProvider extends ServiceProvider
      */
     protected function registerEntityFactory()
     {
-        $this->app->singleton(FakerGenerator::class, function () {
-            return FakerFactory::create();
+        $this->app->singleton(FakerGenerator::class, function ($app) {
+            return FakerFactory::create($app['config']->get('app.faker_locale', 'en_US'));
         });
 
         $this->app->singleton(EntityFactory::class, function ($app) {
