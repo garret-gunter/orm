@@ -1,6 +1,6 @@
 <?php
 
-use Doctrine\Common\Persistence\ManagerRegistry;
+use Doctrine\Persistence\ManagerRegistry;
 use LaravelDoctrine\ORM\Testing\Factory;
 use Mockery\Adapter\Phpunit\MockeryTestCase;
 
@@ -18,8 +18,10 @@ class FactoryTest extends MockeryTestCase
         });
 
         $builder = $factory->of('SomeClass');
-        $this->assertAttributeEquals(['withState' => function () {
-        }], 'states', $builder);
+        $this->assertAttributeEquals([
+            'SomeClass' => ['withState' => function () {
+            }]
+        ], 'states', $builder);
     }
 
     public function test_it_passes_along_after_creating_callback()
