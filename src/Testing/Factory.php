@@ -278,7 +278,7 @@ class Factory implements ArrayAccess
             $name,
             $this->definitions,
             $this->faker,
-            $this->states ?? [],
+            $this->states[$class] ?? [],
             $this->afterMaking,
             $this->afterCreating
         );
